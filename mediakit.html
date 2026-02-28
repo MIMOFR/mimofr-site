@@ -1574,6 +1574,131 @@ a.content-item {
   letter-spacing: 0.05em;
   color: var(--dim);
 }
+
+/* ═══════════════════════════════════════
+   MOBILE RESPONSIVE
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Nav fixes */
+  .nav {
+    padding: 12px 16px;
+    padding-top: max(12px, env(safe-area-inset-top));
+  }
+  
+  .nav-logo {
+    font-size: 11px;
+  }
+  
+  .nav-cta {
+    font-size: 0.65rem;
+    padding: 8px 14px;
+  }
+  
+  /* Hero fixes */
+  .hero {
+    min-height: auto;
+    padding: 100px 0 60px;
+    padding-top: max(100px, calc(env(safe-area-inset-top) + 80px));
+  }
+  
+  .hero-eyebrow {
+    font-size: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .hero-title {
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+    margin-bottom: 28px;
+  }
+  
+  .purple-text {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 40px;
+  }
+  
+  .hero-meta {
+    gap: 16px;
+  }
+  
+  .hero-avatar {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .hero-handle {
+    font-size: 0.8rem;
+  }
+  
+  /* Stats marquee */
+  .stats-marquee {
+    padding: 32px 0;
+  }
+  
+  .stat-number {
+    font-size: 14px;
+  }
+  
+  /* Container */
+  .container {
+    padding: 24px 16px 60px;
+  }
+  
+  /* Section cards */
+  .section-card {
+    padding: 18px;
+  }
+  
+  /* Analytics grid */
+  .analytics-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  
+  .analytics-value {
+    font-size: 1.1rem;
+  }
+  
+  .analytics-value.small {
+    font-size: 0.9rem;
+  }
+  
+  .analytics-label {
+    font-size: 0.65rem;
+  }
+  
+  /* CTA */
+  .cta-title {
+    font-size: 1.8rem;
+  }
+  
+  .cta-button {
+    padding: 14px 32px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .analytics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .platform-pills {
+    gap: 8px;
+  }
+  
+  .platform-pill {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+}
 </style>
 </head>
 <body>
@@ -1766,7 +1891,7 @@ a.content-item {
   <div class="section reveal">
     <div class="section-card">
       <div class="section-title">platforms</div>
-      <p class="about-text" style="margin-bottom: 16px; font-size: 0.75rem; color: var(--dim);">Last updated: Feb 26, 2026 • <span style="color: var(--accent);">Data tracked by mimofr</span></p>
+      <p class="about-text" style="margin-bottom: 16px; font-size: 0.75rem; color: var(--dim);">Last updated: Feb 26, 2026</p>
       
       <!-- Instagram -->
       <div class="platform-block">
