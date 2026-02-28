@@ -211,35 +211,6 @@ body::after {
     transform: translateY(0);
   }
 }
-/* ═══════════════════════════════════════
-   TV FLICKER - HERO TITLE
-   ═══════════════════════════════════════ */
-@keyframes tv-flicker-in {
-  0% { opacity: 0; filter: brightness(1); }
-  20% { opacity: 0; }
-  25% { opacity: 0.6; filter: brightness(1.8); }
-  35% { opacity: 0.1; filter: brightness(1); }
-  50% { opacity: 0.85; filter: brightness(1.3); }
-  65% { opacity: 0.7; }
-  80% { opacity: 1; filter: brightness(1.1); }
-  100% { opacity: 1; filter: brightness(1); }
-}
-
-.hero-title .char {
-  display: inline-block;
-  opacity: 0;
-}
-
-.hero-title .char.flicker-in {
-  animation: tv-flicker-in 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-}
-
-.hero-title .line-inner.no-reveal {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
-}
-
 
 /* ═══════════════════════════════════════
    LAYOUT
@@ -2696,33 +2667,10 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-// Hero title TV flicker - split into chars and flicker in
-document.querySelectorAll('.hero-title .line-inner.reveal').forEach((lineInner) => {
-  lineInner.classList.remove('reveal');
-  lineInner.classList.add('no-reveal');
-  const splitChars = (node) => {
-    if (node.nodeType === 3) {
-      const text = node.textContent;
-      const frag = document.createDocumentFragment();
-      for (let i = 0; i < text.length; i++) {
-        if (text[i] === ' ') continue;
-        const s = document.createElement('span');
-        s.className = 'char';
-        s.textContent = text[i];
-        frag.appendChild(s);
-      }
-      node.parentNode.replaceChild(frag, node);
-    } else if (node.nodeType === 1) {
-      Array.from(node.childNodes).forEach(splitChars);
-    }
-  };
-  Array.from(lineInner.childNodes).forEach(splitChars);
-});
-let ci = 0;
-document.querySelectorAll('.hero-title .char').forEach((ch) => {
-  const delay = 300 + ci * 70 + Math.random() * 50;
-  setTimeout(() => ch.classList.add('flicker-in'), delay);
-  ci++;
+// Hero title staggered reveal
+document.querySelectorAll('.hero-title .line-inner.reveal').forEach((el, i) => {
+  el.style.transitionDelay = (i * 120) + 'ms';
+  setTimeout(() => el.classList.add('visible'), 100 + i * 120);
 });
 </script>
 
