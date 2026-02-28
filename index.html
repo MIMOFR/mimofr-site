@@ -84,7 +84,7 @@
     bottom: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.4;
+    opacity: 0.75;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 42%, black 58%, black 92%, transparent 100%);
     mask-image: linear-gradient(to bottom, transparent 0%, transparent 42%, black 58%, black 92%, transparent 100%);
   }
@@ -779,7 +779,8 @@
     }
 
     function drawStars() {
-      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = 'rgba(10, 6, 18, 0.18)';
+      ctx.fillRect(0, 0, w, h);
 
       const cx = w / 2;
       const cy = h * 0.15;
