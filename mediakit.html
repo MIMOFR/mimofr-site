@@ -32,6 +32,7 @@
   --accent-glow: rgba(201, 168, 76, 0.15);
   --purple: #ffffff;
   --purple-dim: rgba(255, 255, 255, 0.25);
+  --blue: #5A8DB8;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -587,7 +588,7 @@ body::after {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--purple), var(--accent), var(--purple), transparent);
+  background: linear-gradient(90deg, transparent, var(--accent), var(--purple), var(--blue), transparent);
   opacity: 0.8;
 }
 
@@ -683,7 +684,7 @@ a.platform-pill {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--purple), var(--accent), var(--purple), transparent);
+  background: linear-gradient(90deg, transparent, var(--accent), var(--purple), var(--blue), transparent);
   opacity: 0.5;
 }
 
@@ -791,7 +792,7 @@ a.platform-pill {
 .analytics-header svg {
   width: 24px;
   height: 24px;
-  color: var(--purple);
+  color: var(--blue);
 }
 
 .analytics-header span {
@@ -907,7 +908,7 @@ a.platform-pill {
 
 .demo-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--purple), var(--accent));
+  background: linear-gradient(90deg, var(--accent), var(--purple));
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(201, 168, 76, 0.3);
 }
@@ -1090,7 +1091,7 @@ a.platform-pill {
 .content-thumb {
   width: 140px;
   height: 180px;
-  background: linear-gradient(135deg, var(--purple), var(--surface), var(--accent));
+  background: linear-gradient(135deg, var(--accent), var(--surface), var(--blue));
   border-radius: 12px;
   display: flex;
   align-items: center;
