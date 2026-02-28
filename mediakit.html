@@ -211,6 +211,37 @@ body::after {
     transform: translateY(0);
   }
 }
+/* ═══════════════════════════════════════
+   TV FLICKER - HERO TITLE
+   ═══════════════════════════════════════ */
+@keyframes tv-flicker-in {
+  0% { opacity: 0; }
+  8% { opacity: 0.85; filter: brightness(2); }
+  12% { opacity: 0; }
+  22% { opacity: 0.7; filter: brightness(1.6); }
+  28% { opacity: 0; }
+  48% { opacity: 0.95; filter: brightness(1.3); }
+  52% { opacity: 0.15; }
+  68% { opacity: 1; filter: brightness(1.1); }
+  74% { opacity: 0.65; }
+  100% { opacity: 1; filter: brightness(1); }
+}
+
+.hero-title .char {
+  display: inline-block;
+  opacity: 0;
+}
+
+.hero-title .char.flicker-in {
+  animation: tv-flicker-in 0.45s ease-out forwards;
+}
+
+.hero-title .line-inner.no-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
 
 /* ═══════════════════════════════════════
    LAYOUT
@@ -2667,10 +2698,33 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-// Hero title staggered reveal
-document.querySelectorAll('.hero-title .line-inner.reveal').forEach((el, i) => {
-  el.style.transitionDelay = (i * 120) + 'ms';
-  setTimeout(() => el.classList.add('visible'), 100 + i * 120);
+// Hero title TV flicker - split into chars and flicker in
+document.querySelectorAll('.hero-title .line-inner.reveal').forEach((lineInner) => {
+  lineInner.classList.remove('reveal');
+  lineInner.classList.add('no-reveal');
+  const splitChars = (node) => {
+    if (node.nodeType === 3) {
+      const text = node.textContent;
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < text.length; i++) {
+        if (text[i] === ' ') continue;
+        const s = document.createElement('span');
+        s.className = 'char';
+        s.textContent = text[i];
+        frag.appendChild(s);
+      }
+      node.parentNode.replaceChild(frag, node);
+    } else if (node.nodeType === 1) {
+      Array.from(node.childNodes).forEach(splitChars);
+    }
+  };
+  Array.from(lineInner.childNodes).forEach(splitChars);
+});
+let ci = 0;
+document.querySelectorAll('.hero-title .char').forEach((ch) => {
+  const delay = 200 + ci * 55 + Math.random() * 35;
+  setTimeout(() => ch.classList.add('flicker-in'), delay);
+  ci++;
 });
 </script>
 
