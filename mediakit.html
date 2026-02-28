@@ -376,7 +376,10 @@ body::after {
   z-index: 1;
 }
 
-.hero-title .line:has(.purple-text) {
+.hero-title .line.line-creative {
+  overflow: visible;
+}
+.hero-title .line.line-creative .line-inner {
   overflow: visible;
 }
 
@@ -1595,7 +1598,7 @@ a.content-item {
   <div class="page-wrap hero-content">
     <div class="hero-eyebrow reveal">media kit 2026</div>
     <h1 class="hero-title">
-      <span class="line"><span class="line-inner reveal"><span class="purple-text">Creative</span></span></span>
+      <span class="line line-creative"><span class="line-inner reveal"><span class="purple-text">Creative</span></span></span>
       <span class="line"><span class="line-inner reveal">That</span></span>
       <span class="line"><span class="line-inner reveal"><span class="accent-text">Converts</span></span></span>
     </h1>
