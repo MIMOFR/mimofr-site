@@ -30,8 +30,8 @@
   --dim: #6B6580;
   --accent: #C9A84C;
   --accent-glow: rgba(201, 168, 76, 0.15);
-  --purple: #ffffff;
-  --purple-dim: rgba(255, 255, 255, 0.15);
+  --purple: #1a2744;
+  --purple-dim: rgba(26, 39, 68, 0.25);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -117,7 +117,7 @@ body::after {
   pointer-events: none;
   z-index: 100000;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(201, 168, 76, 0.5);
 }
 
 .cursor-ring {
@@ -174,8 +174,8 @@ body::after {
   pointer-events: none;
   background:
     radial-gradient(ellipse 100% 80% at 20% 0%, rgba(26, 39, 68, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse 80% 100% at 90% 20%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 60% at 10% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 100% at 90% 20%, rgba(201, 168, 76, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 60% at 10% 80%, rgba(201, 168, 76, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse 90% 50% at 80% 90%, rgba(26, 39, 68, 0.1) 0%, transparent 50%),
     radial-gradient(ellipse 50% 50% at 50% 50%, rgba(26, 39, 68, 0.05) 0%, transparent 70%);
   animation: ambient-drift 15s ease-in-out infinite alternate;
@@ -243,7 +243,7 @@ body::after {
   font-family: 'Press Start 2P', monospace;
   font-size: 14px;
   color: var(--accent);
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
   text-decoration: none;
 }
 
@@ -276,7 +276,7 @@ body::after {
 
 .nav-cta:hover {
   color: var(--bg);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 25px rgba(201, 168, 76, 0.4);
 }
 
 .nav-cta:hover::before {
@@ -344,7 +344,7 @@ body::after {
   text-transform: lowercase;
   color: var(--accent);
   margin-bottom: 32px;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 15px rgba(201, 168, 76, 0.5);
 }
 
 .hero-eyebrow::before {
@@ -497,7 +497,7 @@ body::after {
   font-family: 'Press Start 2P', monospace;
   font-size: clamp(14px, 3vw, 20px);
   color: var(--text);
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.8), 0 0 4px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.8), 0 0 4px rgba(201, 168, 76, 0.5);
 }
 
 .stat-number .accent {
@@ -561,7 +561,7 @@ body::after {
   object-fit: cover;
   margin-bottom: 16px;
   border: 2px solid var(--accent);
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3), 0 0 60px rgba(26, 39, 68, 0.15);
+  box-shadow: 0 0 30px rgba(201, 168, 76, 0.3), 0 0 60px rgba(26, 39, 68, 0.15);
 }
 
 .profile-handle {
@@ -569,7 +569,7 @@ body::after {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--accent);
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 20px rgba(201, 168, 76, 0.5);
   margin-bottom: 4px;
 }
 
@@ -610,7 +610,7 @@ body::after {
   letter-spacing: 0.08em;
   text-transform: lowercase;
   color: var(--purple);
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.7), 0 0 50px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 30px rgba(201, 168, 76, 0.4);
   margin-bottom: 12px;
   display: flex;
   align-items: center;
@@ -628,7 +628,7 @@ body::after {
   font-size: 3rem;
   font-weight: 700;
   color: var(--accent);
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 0 30px rgba(201, 168, 76, 0.4);
   margin-bottom: 20px;
 }
 
@@ -707,7 +707,7 @@ a.platform-pill {
   letter-spacing: 0.08em;
   text-transform: lowercase;
   color: var(--purple);
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.7), 0 0 50px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 30px rgba(201, 168, 76, 0.4);
   margin-bottom: 16px;
   display: flex;
   align-items: center;
@@ -729,7 +729,7 @@ a.platform-pill {
 .highlight {
   color: var(--accent);
   font-weight: 600;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 0 12px rgba(201, 168, 76, 0.4);
 }
 
 /* ═══════════════════════════════════════
@@ -776,7 +776,7 @@ a.platform-pill {
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--accent);
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 0 15px rgba(201, 168, 76, 0.4);
 }
 
 /* ═══════════════════════════════════════
@@ -859,7 +859,7 @@ a.platform-pill {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--accent);
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+  text-shadow: 0 0 12px rgba(201, 168, 76, 0.3);
 }
 
 .analytics-value.small {
@@ -924,7 +924,7 @@ a.platform-pill {
   height: 100%;
   background: linear-gradient(90deg, var(--purple), var(--accent));
   border-radius: 4px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px rgba(201, 168, 76, 0.3);
 }
 
 .demo-pct {
@@ -1005,7 +1005,7 @@ a.platform-pill {
 
 .showcase-item:hover .showcase-video {
   border-color: var(--accent);
-  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.25), 0 0 0 1px var(--accent);
+  box-shadow: 0 8px 32px rgba(201, 168, 76, 0.25), 0 0 0 1px var(--accent);
 }
 
 .showcase-video {
@@ -1063,7 +1063,7 @@ a.platform-pill {
   font-family: 'Press Start 2P', monospace;
   font-size: 11px;
   color: var(--text);
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  text-shadow: 0 0 8px rgba(201, 168, 76, 0.6);
   margin-bottom: 4px;
 }
 
@@ -1221,7 +1221,7 @@ a.content-item {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
   color: var(--accent);
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  text-shadow: 0 0 10px rgba(201, 168, 76, 0.3);
 }
 
 .brand-stat-label {
@@ -1481,7 +1481,7 @@ a.content-item {
 
 .contact-link:hover {
   color: var(--accent);
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 15px rgba(201, 168, 76, 0.5);
 }
 
 /* ═══════════════════════════════════════
@@ -1531,7 +1531,7 @@ a.content-item {
 .cta-button:hover {
   background: transparent;
   color: var(--accent);
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 30px rgba(201, 168, 76, 0.5);
 }
 
 .social-icons {
