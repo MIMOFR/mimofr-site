@@ -78,15 +78,15 @@
   /* Starfield — scrolls with page, behind all content, starts below hero */
   .starfield {
     position: absolute;
-    top: max(340px, calc(70svh - 100px));
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 0;
     pointer-events: none;
     opacity: 0.4;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 4%, black 12%, black 94%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, transparent 4%, black 12%, black 94%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 42%, black 58%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, transparent 42%, black 58%, black 92%, transparent 100%);
   }
 
   .starfield canvas {
@@ -246,7 +246,7 @@
     text-align: center;
     padding: 0 20px 28px;
     position: relative;
-    margin-bottom: -100px;
+    margin-bottom: -200px;
   }
 
   .hero video {
@@ -254,28 +254,14 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: -100px;
+    bottom: -200px;
     width: 100%;
-    height: calc(100% + 100px);
+    height: calc(100% + 200px);
     object-fit: cover;
     object-position: center 25%;
     opacity: 0.6;
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 95%);
-    mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 95%);
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -100px;
-    height: 100px;
-    background: var(--bg);
-    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 100%);
-    mask-image: linear-gradient(to top, black 0%, transparent 100%);
-    z-index: 1;
-    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 35%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 35%, transparent 100%);
   }
   
   .hero-content {
@@ -323,7 +309,7 @@
   .menu {
     max-width: 440px;
     margin: 0 auto;
-    padding: 100px 20px 40px;
+    padding: 200px 20px 40px;
     position: relative;
     z-index: 1;
   }
@@ -793,8 +779,7 @@
     }
 
     function drawStars() {
-      ctx.fillStyle = 'rgba(10, 6, 18, 0.18)';
-      ctx.fillRect(0, 0, w, h);
+      ctx.clearRect(0, 0, w, h);
 
       const cx = w / 2;
       const cy = h * 0.15;
