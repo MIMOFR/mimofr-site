@@ -214,24 +214,9 @@ body::after {
 /* ═══════════════════════════════════════
    TV FLICKER - HERO TITLE
    ═══════════════════════════════════════ */
-@keyframes tv-flicker-in {
-  0% { opacity: 0; filter: brightness(1); }
-  20% { opacity: 0; }
-  25% { opacity: 0.6; filter: brightness(1.8); }
-  35% { opacity: 0.1; filter: brightness(1); }
-  50% { opacity: 0.85; filter: brightness(1.3); }
-  65% { opacity: 0.7; }
-  80% { opacity: 1; filter: brightness(1.1); }
-  100% { opacity: 1; filter: brightness(1); }
-}
-
 .hero-title .char {
   display: inline-block;
   opacity: 0;
-}
-
-.hero-title .char.flicker-in {
-  animation: tv-flicker-in 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
 .hero-title .line-inner.no-reveal {
@@ -2696,7 +2681,7 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-// Hero title TV flicker - split into chars and flicker in
+// Hero title CRT boot — realistic phosphor warmup per character
 document.querySelectorAll('.hero-title .line-inner.reveal').forEach((lineInner) => {
   lineInner.classList.remove('reveal');
   lineInner.classList.add('no-reveal');
@@ -2718,11 +2703,63 @@ document.querySelectorAll('.hero-title .line-inner.reveal').forEach((lineInner) 
   };
   Array.from(lineInner.childNodes).forEach(splitChars);
 });
+
+// Phosphor warmup — each char flickers with its own random timing
+function flickerIn(el) {
+  let brightness = 0;
+  let target = 1;
+  let settled = false;
+  let flickerCount = 0;
+  const maxFlickers = 2 + Math.floor(Math.random() * 3); // 2-4 flickers
+  const warmupSpeed = 0.015 + Math.random() * 0.01;
+
+  function tick() {
+    if (settled) return;
+
+    // Randomly decide to flicker
+    if (brightness > 0.3 && flickerCount < maxFlickers && Math.random() < 0.06) {
+      // Dim down briefly like a phosphor losing power
+      brightness *= (0.2 + Math.random() * 0.3);
+      flickerCount++;
+    } else {
+      // Warm up toward target
+      brightness += (target - brightness) * warmupSpeed + Math.random() * 0.02;
+    }
+
+    // Clamp
+    if (brightness > 1) brightness = 1;
+
+    // Once bright enough and done flickering, settle
+    if (brightness > 0.92 && flickerCount >= maxFlickers) {
+      brightness = 1;
+      settled = true;
+      el.style.opacity = '1';
+      el.style.filter = '';
+      return;
+    }
+
+    el.style.opacity = Math.max(0, brightness).toFixed(3);
+    if (brightness > 0.5) {
+      el.style.filter = 'brightness(' + (1 + (1 - brightness) * 0.6).toFixed(2) + ')';
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// Stagger each character with random delays — like signals arriving
 let ci = 0;
-document.querySelectorAll('.hero-title .char').forEach((ch) => {
-  const delay = 300 + ci * 70 + Math.random() * 50;
-  setTimeout(() => ch.classList.add('flicker-in'), delay);
-  ci++;
+const chars = document.querySelectorAll('.hero-title .char');
+const totalChars = chars.length;
+chars.forEach((ch, i) => {
+  // Each line gets a base delay, chars within a line get small random offsets
+  const lineIndex = ch.closest('.line-inner') ?
+    Array.from(document.querySelectorAll('.hero-title .line-inner')).indexOf(ch.closest('.line-inner')) : 0;
+  const baseDelay = 400 + lineIndex * 300;
+  const charDelay = baseDelay + (i - lineIndex * 8) * 40 + Math.random() * 120;
+
+  setTimeout(() => flickerIn(ch), charDelay);
 });
 </script>
 
