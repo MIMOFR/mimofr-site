@@ -330,6 +330,15 @@
     max-width: 100%;
   }
   
+  .promo-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
   .promo::before {
     content: '';
     position: absolute;
@@ -747,17 +756,20 @@
   <div class="starfield"><canvas id="starCanvas"></canvas></div>
 
   <nav class="menu">
+    <a href="https://createmusic.fm/higher-mp3" target="_blank" class="promo reveal">
+      <video class="promo-video" autoplay muted loop playsinline>
+        <source src="wiz-flying.mp4" type="video/mp4">
+      </video>
+      <span class="promo-badge" style="position:absolute;top:14px;right:14px;z-index:3;background:rgba(212,168,83,0.9);color:#0a0a0a;font-family:'Press Start 2P',monospace;font-size:8px;padding:6px 10px;border-radius:6px;letter-spacing:1px;">may 8</span>
+      <span class="promo-text">higher.mp3<br>pre-save now</span>
+    </a>
+
     <a href="https://mimofr.gumroad.com/l/mjnbd" target="_blank" class="promo-wizardcore reveal" id="wizardcore-cta" onclick="trackClick('wizardcore-pack')">
       <div class="promo-limited">limited</div>
       <div class="promo-content">
         <div class="promo-title">wizardcore visuals pack</div>
         <div class="promo-sub">every prompt + the full workflow</div>
       </div>
-    </a>
-
-    <a href="https://createmusic.fm/higher-mp3" target="_blank" class="promo reveal">
-      <span class="promo-badge" style="position:absolute;top:14px;right:14px;z-index:3;background:rgba(212,168,83,0.9);color:#0a0a0a;font-family:'Press Start 2P',monospace;font-size:8px;padding:6px 10px;border-radius:6px;letter-spacing:1px;">may 8</span>
-      <span class="promo-text">higher.mp3<br>pre-save now</span>
     </a>
 
     <div class="section reveal">
@@ -891,7 +903,7 @@
 
 <!-- Background Music (swap out bg-music.mp3 with your track) -->
 <audio id="bgMusic" loop>
-  <source src="explosive.mp3" type="audio/mpeg">
+  <source src="witch_hunt.mp3" type="audio/mpeg">
 </audio>
 
 <button class="audio-btn" id="audioBtn" onclick="toggleAudio()">🔇</button>
