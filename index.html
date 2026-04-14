@@ -383,7 +383,7 @@
   .promo-wizardcore {
     display: block;
     position: relative;
-    background: url('wizardcore-cover.jpg') center center / cover no-repeat;
+    background: var(--bg);
     border: 2px solid #d4a853;
     border-radius: 18px;
     padding: 0;
@@ -765,6 +765,9 @@
     </a>
 
     <a href="https://mimofr.gumroad.com/l/mjnbd" target="_blank" class="promo-wizardcore reveal" id="wizardcore-cta" onclick="trackClick('wizardcore-pack')">
+      <video class="promo-video" autoplay muted loop playsinline>
+        <source src="wizardcore-visual.mp4" type="video/mp4">
+      </video>
       <div class="promo-limited">limited</div>
       <div class="promo-content">
         <div class="promo-title">wizardcore visuals pack</div>
