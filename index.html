@@ -318,13 +318,13 @@
   .promo {
     display: block;
     position: relative;
-    background: url('overdrive-cover.png') center center / cover no-repeat;
-    border: 2px solid #e63c3c;
+    background: linear-gradient(135deg, #1a0a2e 0%, #0d1b3e 30%, #1a0a2e 60%, #2d1b4e 100%);
+    border: 2px solid var(--gold);
     border-radius: 18px;
     padding: 0;
     margin-bottom: 28px;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(196, 30, 30, 0.4);
+    box-shadow: 0 0 20px rgba(212, 168, 83, 0.4);
     animation: promo-glow 2s ease-in-out infinite;
     aspect-ratio: 1 / 1;
     max-width: 100%;
@@ -334,7 +334,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.9) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.6) 100%);
     z-index: 1;
   }
   
@@ -354,21 +354,123 @@
   }
   
   @keyframes promo-glow {
-    0%, 100% { 
-      box-shadow: 0 0 20px rgba(196, 30, 30, 0.4), 0 0 40px rgba(196, 30, 30, 0.2);
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(212, 168, 83, 0.4), 0 0 40px rgba(212, 168, 83, 0.2);
     }
-    50% { 
-      box-shadow: 0 0 30px rgba(196, 30, 30, 0.7), 0 0 60px rgba(196, 30, 30, 0.4), 0 0 80px rgba(139, 92, 246, 0.2);
+    50% {
+      box-shadow: 0 0 30px rgba(212, 168, 83, 0.7), 0 0 60px rgba(212, 168, 83, 0.4), 0 0 80px rgba(139, 92, 246, 0.2);
     }
   }
-  
+
   .promo:hover {
     animation: none;
-    box-shadow: 0 0 40px rgba(196, 30, 30, 0.8), 0 0 80px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 0 40px rgba(212, 168, 83, 0.8), 0 0 80px rgba(139, 92, 246, 0.3);
     transform: scale(1.02);
   }
-  
+
   .promo:active { transform: scale(0.98); }
+
+  /* Wizardcore Featured Card */
+  .promo-wizardcore {
+    display: block;
+    position: relative;
+    background: url('wizardcore-cover.jpg') center center / cover no-repeat;
+    border: 2px solid #d4a853;
+    border-radius: 18px;
+    padding: 0;
+    margin-bottom: 28px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(212, 168, 83, 0.4);
+    animation: wiz-glow 2.5s ease-in-out infinite;
+    aspect-ratio: 16 / 9;
+    max-width: 100%;
+  }
+
+  .promo-wizardcore::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.85) 100%);
+    z-index: 1;
+  }
+
+  .promo-wizardcore .promo-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    background: rgba(212, 168, 83, 0.9);
+    color: #0a0a0a;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    letter-spacing: 1px;
+  }
+
+  .promo-wizardcore .promo-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 22px;
+    z-index: 2;
+  }
+
+  .promo-wizardcore .promo-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+    margin-bottom: 6px;
+    color: #d4a853;
+  }
+
+  .promo-wizardcore .promo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.5px;
+  }
+
+  .promo-wizardcore .promo-limited {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    background: rgba(139, 92, 246, 0.85);
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    animation: pulse-limited 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-limited {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  @keyframes wiz-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(212, 168, 83, 0.3), 0 0 40px rgba(139, 92, 246, 0.15);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(212, 168, 83, 0.6), 0 0 60px rgba(139, 92, 246, 0.3), 0 0 80px rgba(212, 168, 83, 0.15);
+    }
+  }
+
+  .promo-wizardcore:hover {
+    animation: none;
+    box-shadow: 0 0 40px rgba(212, 168, 83, 0.8), 0 0 80px rgba(139, 92, 246, 0.4);
+    transform: scale(1.02);
+  }
+
+  .promo-wizardcore:active { transform: scale(0.98); }
   
   /* Section */
   .section { margin-bottom: 28px; }
@@ -512,6 +614,60 @@
     opacity: 0.6;
   }
   
+  /* $wizard token ticker */
+  .token-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 16px;
+    margin: 0 auto 20px;
+    max-width: 440px;
+    background: rgba(19, 16, 26, 0.5);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    backdrop-filter: blur(16px) saturate(1.4);
+    border: 1px solid rgba(212, 168, 83, 0.15);
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+  }
+
+  .token-bar:hover {
+    border-color: rgba(212, 168, 83, 0.4);
+    box-shadow: 0 0 20px rgba(212, 168, 83, 0.15);
+  }
+
+  .token-bar .token-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  .token-bar .token-ca {
+    font-size: 9px;
+    color: var(--dim);
+    letter-spacing: 0.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
+  }
+
+  .token-bar .token-copy {
+    font-size: 9px;
+    color: var(--dim);
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  .token-bar:hover .token-copy { opacity: 1; }
+
+  .token-bar.copied .token-copy { color: var(--gold); }
+
   /* Footer */
   footer {
     text-align: center;
@@ -591,8 +747,17 @@
   <div class="starfield"><canvas id="starCanvas"></canvas></div>
 
   <nav class="menu">
-    <a href="https://distrokid.com/hyperfollow/mimofrmimofrarchive/archives-overdrive" target="_blank" class="promo reveal">
-      <span class="promo-text">over_drive ep<br>out now</span>
+    <a href="https://mimofr.gumroad.com/l/mjnbd" target="_blank" class="promo-wizardcore reveal" id="wizardcore-cta" onclick="trackClick('wizardcore-pack')">
+      <div class="promo-limited">limited</div>
+      <div class="promo-content">
+        <div class="promo-title">wizardcore visuals pack</div>
+        <div class="promo-sub">every prompt + the full workflow</div>
+      </div>
+    </a>
+
+    <a href="https://createmusic.fm/higher-mp3" target="_blank" class="promo reveal">
+      <span class="promo-badge" style="position:absolute;top:14px;right:14px;z-index:3;background:rgba(212,168,83,0.9);color:#0a0a0a;font-family:'Press Start 2P',monospace;font-size:8px;padding:6px 10px;border-radius:6px;letter-spacing:1px;">may 8</span>
+      <span class="promo-text">higher.mp3<br>pre-save now</span>
     </a>
 
     <div class="section reveal">
@@ -644,6 +809,14 @@
 
     <div class="section reveal">
       <div class="section-label">» connect</div>
+      <a href="https://x.com/i/communities/2031864427176476866" target="_blank" class="link" style="border-color: rgba(212, 168, 83, 0.2);">
+        <span class="link-icon">🪄</span>
+        <div class="link-text">
+          <h3 style="color: var(--gold);">$wizard</h3>
+          <p>community on x</p>
+        </div>
+        <span class="link-arrow">►</span>
+      </a>
       <a href="https://discord.gg/fQuMm52GJP" target="_blank" class="link">
         <span class="link-icon">🧙🏼‍♂️</span>
         <div class="link-text">
@@ -706,6 +879,12 @@
       </a>
     </div>
   </nav>
+
+  <div class="token-bar reveal" id="tokenBar" onclick="copyCA()">
+    <span class="token-name">$wizard</span>
+    <span class="token-ca" id="tokenCA">7XdCaKpqLmKE2K7yr9xaeWB1H2CVZ1oGwxB6hmd9pump</span>
+    <span class="token-copy" id="tokenCopy">copy</span>
+  </div>
 
   <footer class="reveal">© 2026 mimofr</footer>
 </div>
@@ -911,7 +1090,26 @@
     }
     drawStars();
   })();
+
+  // Copy $wizard CA
+  function copyCA() {
+    const ca = '7XdCaKpqLmKE2K7yr9xaeWB1H2CVZ1oGwxB6hmd9pump';
+    navigator.clipboard.writeText(ca).then(() => {
+      const bar = document.getElementById('tokenBar');
+      const copy = document.getElementById('tokenCopy');
+      copy.textContent = 'copied';
+      bar.classList.add('copied');
+      setTimeout(() => { copy.textContent = 'copy'; bar.classList.remove('copied'); }, 2000);
+    }).catch(() => {});
+    trackClick('wizard-ca-copy');
+  }
+
+  // Click tracking
+  function trackClick(label) {
+    if (window.va) window.va('event', { name: label, data: { referrer: document.referrer || 'direct' } });
+  }
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 
 </body>
 </html>
