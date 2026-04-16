@@ -2486,98 +2486,403 @@ a.content-item {
   </div>
 
   <!-- $wizard Web3 Venture -->
+  <style>
+    @keyframes wizBorderSpin {
+      0% { --wiz-angle: 0deg; }
+      100% { --wiz-angle: 360deg; }
+    }
+    @keyframes wizPulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+    @keyframes wizFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    @keyframes wizFadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes wizLiveDot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
+      50% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+    }
+    .wiz-outer {
+      position: relative;
+      border-radius: 20px;
+      padding: 2px;
+      background: conic-gradient(from var(--wiz-angle, 0deg), #4ade80, #22c55e, rgba(74, 222, 128, 0.1), #4ade80);
+      animation: wizBorderSpin 4s linear infinite;
+    }
+    @supports (background: conic-gradient(from 0deg, red, blue)) {
+      @property --wiz-angle {
+        syntax: "<angle>";
+        initial-value: 0deg;
+        inherits: false;
+      }
+    }
+    .wiz-inner {
+      border-radius: 18px;
+      background: linear-gradient(170deg, #0d1117 0%, #0a0f0d 40%, #0d1117 100%);
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .wiz-inner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 20%, rgba(74, 222, 128, 0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(34, 197, 94, 0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .wiz-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 2rem;
+      color: #4ade80;
+      text-shadow: 0 0 40px rgba(74, 222, 128, 0.5), 0 0 80px rgba(74, 222, 128, 0.2);
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+      animation: wizFloat 3s ease-in-out infinite;
+    }
+    .wiz-subtitle {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: #9ca3af;
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+    .wiz-subtitle strong {
+      color: #4ade80;
+      font-weight: 600;
+    }
+    .wiz-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .wiz-stat {
+      background: rgba(74, 222, 128, 0.04);
+      border: 1px solid rgba(74, 222, 128, 0.12);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .wiz-stat:hover {
+      border-color: rgba(74, 222, 128, 0.35);
+      background: rgba(74, 222, 128, 0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(74, 222, 128, 0.1);
+    }
+    .wiz-stat::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(74, 222, 128, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .wiz-stat-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #4ade80;
+      text-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+    }
+    .wiz-stat-label {
+      font-size: 0.72rem;
+      color: #6b7280;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 500;
+    }
+    .wiz-chart-wrap {
+      border-radius: 16px;
+      border: 1px solid rgba(74, 222, 128, 0.1);
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 24px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .wiz-chart-wrap::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(74, 222, 128, 0.3), transparent);
+    }
+    .wiz-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .wiz-chart-pair {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #e5e7eb;
+      letter-spacing: 0.5px;
+    }
+    .wiz-chart-chain {
+      font-size: 0.7rem;
+      color: #6b7280;
+      margin-left: 8px;
+      font-weight: 400;
+    }
+    .wiz-live-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      color: #4ade80;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .wiz-live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: wizLiveDot 2s ease-in-out infinite;
+    }
+    #wizard-chart {
+      width: 100%;
+      height: 200px;
+      border-radius: 8px;
+    }
+    .wiz-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(74, 222, 128, 0.06);
+    }
+    .wiz-price-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #4ade80;
+      text-shadow: 0 0 12px rgba(74, 222, 128, 0.3);
+    }
+    .wiz-price-chg {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+    .wiz-links {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .wiz-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: rgba(74, 222, 128, 0.04);
+      border: 1px solid rgba(74, 222, 128, 0.1);
+      border-radius: 12px;
+      padding: 12px 8px;
+      font-size: 0.78rem;
+      color: #d1d5db;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .wiz-link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .wiz-link:hover {
+      border-color: rgba(74, 222, 128, 0.4);
+      color: #4ade80;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(74, 222, 128, 0.15);
+    }
+    .wiz-link:hover::before { opacity: 1; }
+    .wiz-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .wiz-particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: wizPulse 3s ease-in-out infinite;
+    }
+    @media (max-width: 600px) {
+      .wiz-inner { padding: 28px 20px; }
+      .wiz-title { font-size: 1.4rem; }
+      .wiz-links { grid-template-columns: 1fr 1fr; }
+      .wiz-stat-val { font-size: 1.4rem; }
+    }
+  </style>
   <div class="section reveal">
-    <div class="section-card" style="border: 1px solid rgba(74, 222, 128, 0.2); background: linear-gradient(180deg, var(--surface) 0%, rgba(74, 222, 128, 0.04) 100%); box-shadow: 0 0 30px rgba(74, 222, 128, 0.06), inset 0 1px 0 rgba(74, 222, 128, 0.08);">
-      <div class="section-title" style="color: #4ade80; text-shadow: 0 0 20px rgba(74, 222, 128, 0.4);">$wizard</div>
-      <p class="about-text" style="margin-bottom: 24px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">Solana token built on mimofr's original wizard IP. Reposted by Tesla, amplified by Solana Foundation members. Creator royalties on-chain. Verified on CoinGecko, listed on MEXC.</p>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
-        <div style="background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 12px; padding: 20px; text-align: center;">
-          <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: #4ade80;">$607K</div>
-          <div style="font-size: 0.75rem; color: var(--dim); margin-top: 4px;">ATH Market Cap</div>
-        </div>
-        <div style="background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 12px; padding: 20px; text-align: center;">
-          <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: #4ade80;">CTO</div>
-          <div style="font-size: 0.75rem; color: var(--dim); margin-top: 4px;">Community Takeover</div>
-        </div>
-      </div>
-      <div style="border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.15); margin-bottom: 24px; background: #0a0a0a; padding: 20px; position: relative; overflow: hidden;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-          <div>
-            <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: #4ade80; letter-spacing: 1px;">WIZARD/SOL</span>
-            <span style="font-size: 0.7rem; color: var(--dim); margin-left: 8px;">Solana</span>
+    <div class="wiz-outer">
+      <div class="wiz-inner">
+        <div class="wiz-particles" id="wiz-particles"></div>
+        <div class="wiz-title">$wizard</div>
+        <p class="wiz-subtitle">Solana memecoin built on mimofr's original wizard IP. Reposted by <strong>Tesla</strong>. Amplified by <strong>Solana Foundation</strong> members. Creator royalties on-chain. Verified on <strong>CoinGecko</strong>, listed on <strong>MEXC</strong>.</p>
+        <div class="wiz-stats">
+          <div class="wiz-stat">
+            <div class="wiz-stat-val">$607K</div>
+            <div class="wiz-stat-label">ATH Market Cap</div>
           </div>
-          <div style="font-size: 0.75rem; color: var(--dim);">live</div>
+          <div class="wiz-stat">
+            <div class="wiz-stat-val">CTO</div>
+            <div class="wiz-stat-label">Community Takeover</div>
+          </div>
         </div>
-        <canvas id="wizard-chart" style="width: 100%; height: 200px;"></canvas>
-        <div id="wizard-price" style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px;">
-          <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; color: #4ade80;" id="wiz-price">--</div>
-          <div style="font-size: 0.8rem;" id="wiz-change">--</div>
+        <div class="wiz-chart-wrap">
+          <div class="wiz-chart-header">
+            <div>
+              <span class="wiz-chart-pair">WIZARD / SOL</span>
+              <span class="wiz-chart-chain">Solana</span>
+            </div>
+            <div class="wiz-live-badge">
+              <span class="wiz-live-dot"></span>
+              Live
+            </div>
+          </div>
+          <canvas id="wizard-chart"></canvas>
+          <div class="wiz-price-row">
+            <div class="wiz-price-val" id="wiz-price">--</div>
+            <div class="wiz-price-chg" id="wiz-change">--</div>
+          </div>
         </div>
-      </div>
-      <script>
-      (function(){
-        const API = 'https://api.coingecko.com/api/v3/coins/smoking-wizard/market_chart?vs_currency=usd&days=30';
-        const canvas = document.getElementById('wizard-chart');
-        const ctx = canvas.getContext('2d');
-        function draw(prices) {
-          const dpr = window.devicePixelRatio || 1;
-          const rect = canvas.getBoundingClientRect();
-          canvas.width = rect.width * dpr;
-          canvas.height = rect.height * dpr;
-          ctx.scale(dpr, dpr);
-          const w = rect.width, h = rect.height;
-          const vals = prices.map(p => p[1]);
-          const min = Math.min(...vals), max = Math.max(...vals);
-          const range = max - min || 1;
-          ctx.clearRect(0, 0, w, h);
-          // gradient fill
-          const grad = ctx.createLinearGradient(0, 0, 0, h);
-          grad.addColorStop(0, 'rgba(74, 222, 128, 0.3)');
-          grad.addColorStop(1, 'rgba(74, 222, 128, 0)');
-          ctx.beginPath();
-          ctx.moveTo(0, h);
-          for (let i = 0; i < vals.length; i++) {
-            const x = (i / (vals.length - 1)) * w;
-            const y = h - ((vals[i] - min) / range) * h * 0.85 - h * 0.05;
-            ctx.lineTo(x, y);
+        <script>
+        (function(){
+          // Spawn floating particles
+          const pCont = document.getElementById('wiz-particles');
+          for (let i = 0; i < 20; i++) {
+            const p = document.createElement('div');
+            p.className = 'wiz-particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = Math.random() * 100 + '%';
+            p.style.animationDelay = (Math.random() * 3) + 's';
+            p.style.animationDuration = (2 + Math.random() * 3) + 's';
+            pCont.appendChild(p);
           }
-          ctx.lineTo(w, h);
-          ctx.closePath();
-          ctx.fillStyle = grad;
-          ctx.fill();
-          // line
-          ctx.beginPath();
-          for (let i = 0; i < vals.length; i++) {
-            const x = (i / (vals.length - 1)) * w;
-            const y = h - ((vals[i] - min) / range) * h * 0.85 - h * 0.05;
-            i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          // Chart
+          const API = 'https://api.coingecko.com/api/v3/coins/smoking-wizard/market_chart?vs_currency=usd&days=30';
+          const canvas = document.getElementById('wizard-chart');
+          const ctx = canvas.getContext('2d');
+          function draw(prices) {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+            const w = rect.width, h = rect.height;
+            const vals = prices.map(p => p[1]);
+            const min = Math.min(...vals), max = Math.max(...vals);
+            const range = max - min || 1;
+            ctx.clearRect(0, 0, w, h);
+            // Animated draw-in
+            let progress = 0;
+            const totalFrames = 60;
+            function animate() {
+              progress++;
+              const pct = Math.min(progress / totalFrames, 1);
+              const eased = 1 - Math.pow(1 - pct, 3);
+              const drawCount = Math.floor(eased * vals.length);
+              ctx.clearRect(0, 0, w, h);
+              if (drawCount < 2) { requestAnimationFrame(animate); return; }
+              // Gradient fill
+              const grad = ctx.createLinearGradient(0, 0, 0, h);
+              grad.addColorStop(0, 'rgba(74, 222, 128, 0.25)');
+              grad.addColorStop(0.5, 'rgba(74, 222, 128, 0.08)');
+              grad.addColorStop(1, 'rgba(74, 222, 128, 0)');
+              ctx.beginPath();
+              ctx.moveTo(0, h);
+              for (let i = 0; i < drawCount; i++) {
+                const x = (i / (vals.length - 1)) * w;
+                const y = h - ((vals[i] - min) / range) * h * 0.85 - h * 0.05;
+                ctx.lineTo(x, y);
+              }
+              const lastX = ((drawCount - 1) / (vals.length - 1)) * w;
+              ctx.lineTo(lastX, h);
+              ctx.closePath();
+              ctx.fillStyle = grad;
+              ctx.fill();
+              // Glow line
+              ctx.beginPath();
+              for (let i = 0; i < drawCount; i++) {
+                const x = (i / (vals.length - 1)) * w;
+                const y = h - ((vals[i] - min) / range) * h * 0.85 - h * 0.05;
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+              }
+              ctx.shadowColor = 'rgba(74, 222, 128, 0.6)';
+              ctx.shadowBlur = 12;
+              ctx.strokeStyle = '#4ade80';
+              ctx.lineWidth = 2.5;
+              ctx.stroke();
+              ctx.shadowBlur = 0;
+              // Dot at tip
+              if (drawCount > 0) {
+                const tipX = ((drawCount - 1) / (vals.length - 1)) * w;
+                const tipY = h - ((vals[drawCount - 1] - min) / range) * h * 0.85 - h * 0.05;
+                ctx.beginPath();
+                ctx.arc(tipX, tipY, 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#4ade80';
+                ctx.shadowColor = 'rgba(74, 222, 128, 0.8)';
+                ctx.shadowBlur = 16;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+              }
+              if (pct < 1) requestAnimationFrame(animate);
+            }
+            animate();
+            // Price display
+            const last = vals[vals.length - 1];
+            const first = vals[0];
+            const chg = ((last - first) / first * 100).toFixed(1);
+            document.getElementById('wiz-price').textContent = '$' + last.toFixed(6);
+            const chgEl = document.getElementById('wiz-change');
+            chgEl.textContent = (chg >= 0 ? '+' : '') + chg + '% (30d)';
+            chgEl.style.color = chg >= 0 ? '#4ade80' : '#ef4444';
           }
-          ctx.shadowColor = 'rgba(74, 222, 128, 0.5)';
-          ctx.shadowBlur = 8;
-          ctx.strokeStyle = '#4ade80';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-          // price display
-          const last = vals[vals.length - 1];
-          const first = vals[0];
-          const chg = ((last - first) / first * 100).toFixed(1);
-          document.getElementById('wiz-price').textContent = '$' + last.toFixed(6);
-          const chgEl = document.getElementById('wiz-change');
-          chgEl.textContent = (chg >= 0 ? '+' : '') + chg + '% (30d)';
-          chgEl.style.color = chg >= 0 ? '#4ade80' : '#ef4444';
-        }
-        fetch(API).then(r => r.json()).then(d => { if(d.prices) draw(d.prices); }).catch(() => {
-          document.getElementById('wiz-price').textContent = '$wizard';
-          document.getElementById('wiz-change').textContent = 'chart unavailable';
-          document.getElementById('wiz-change').style.color = 'var(--dim)';
-        });
-      })();
-      </script>
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
-        <a href="https://pump.fun/coin/7XdCaKpqLmKE2K7yr9xaeWB1H2CVZ1oGwxB6hmd9pump" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 8px; padding: 10px 12px; font-size: 0.8rem; color: var(--text); font-weight: 500; transition: all 0.2s;">pump.fun</a>
-        <a href="https://x.com/savewizardsol" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 8px; padding: 10px 12px; font-size: 0.8rem; color: var(--text); font-weight: 500; transition: all 0.2s;">@savewizardsol</a>
-        <a href="https://x.com/mimofrl" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 8px; padding: 10px 12px; font-size: 0.8rem; color: var(--text); font-weight: 500; transition: all 0.2s;">@mimofrl</a>
-        <a href="https://www.coingecko.com/en/coins/smoking-wizard" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 8px; padding: 10px 12px; font-size: 0.8rem; color: var(--text); font-weight: 500; transition: all 0.2s;">CoinGecko</a>
+          fetch(API).then(r => r.json()).then(d => { if(d.prices) draw(d.prices); }).catch(() => {
+            document.getElementById('wiz-price').textContent = '$wizard';
+            document.getElementById('wiz-change').textContent = 'chart unavailable';
+            document.getElementById('wiz-change').style.color = '#6b7280';
+          });
+        })();
+        </script>
+        <div class="wiz-links">
+          <a href="https://pump.fun/coin/7XdCaKpqLmKE2K7yr9xaeWB1H2CVZ1oGwxB6hmd9pump" target="_blank" class="wiz-link">pump.fun</a>
+          <a href="https://x.com/savewizardsol" target="_blank" class="wiz-link">@savewizardsol</a>
+          <a href="https://x.com/mimofrl" target="_blank" class="wiz-link">@mimofrl</a>
+          <a href="https://www.coingecko.com/en/coins/smoking-wizard" target="_blank" class="wiz-link">CoinGecko</a>
+        </div>
       </div>
     </div>
   </div>
