@@ -2487,22 +2487,92 @@ a.content-item {
 
   <!-- $wizard Web3 Venture -->
   <div class="section reveal">
-    <div class="section-card" style="border: 1px solid rgba(34, 197, 94, 0.15); background: linear-gradient(180deg, var(--surface) 0%, rgba(34, 197, 94, 0.03) 100%);">
-      <div class="section-title" style="color: #22c55e;">$wizard</div>
-      <p class="about-text" style="margin-bottom: 24px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">Community-driven Solana token built around mimofr's original music and signature wizard visuals. Creator fees route directly to mimofr's wallet. Verified on CoinGecko, listed on MEXC.</p>
+    <div class="section-card" style="border: 1px solid rgba(74, 222, 128, 0.2); background: linear-gradient(180deg, var(--surface) 0%, rgba(74, 222, 128, 0.04) 100%); box-shadow: 0 0 30px rgba(74, 222, 128, 0.06), inset 0 1px 0 rgba(74, 222, 128, 0.08);">
+      <div class="section-title" style="color: #4ade80; text-shadow: 0 0 20px rgba(74, 222, 128, 0.4);">$wizard</div>
+      <p class="about-text" style="margin-bottom: 24px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">A community-driven Solana token tied to the mimofr brand. Built around original wizard IP with real market cap, active trading, and creator royalties routed on-chain. Verified on CoinGecko. Listed on MEXC.</p>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
         <div style="background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 12px; padding: 20px; text-align: center;">
-          <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: #22c55e;">$607K</div>
+          <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: #4ade80;">$607K</div>
           <div style="font-size: 0.75rem; color: var(--dim); margin-top: 4px;">ATH Market Cap</div>
         </div>
         <div style="background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 12px; padding: 20px; text-align: center;">
-          <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: #22c55e;">CTO</div>
+          <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: #4ade80;">CTO</div>
           <div style="font-size: 0.75rem; color: var(--dim); margin-top: 4px;">Community Takeover</div>
         </div>
       </div>
-      <div style="border-radius: 12px; overflow: hidden; border: 1px solid rgba(34, 197, 94, 0.15); margin-bottom: 24px; background: #0a0a0a;">
-        <iframe src="https://www.geckoterminal.com/solana/pools/2jKKfJCD7gtafJm7zPHECiT55JFGvCZEQbWCk93Ppump?embed=1&info=0&swaps=0&grayscale=0&light_chart=0" style="width: 100%; height: 360px; border: none;" loading="lazy" allow="clipboard-write" allowfullscreen></iframe>
+      <div style="border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.15); margin-bottom: 24px; background: #0a0a0a; padding: 20px; position: relative; overflow: hidden;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: #4ade80; letter-spacing: 1px;">WIZARD/SOL</span>
+            <span style="font-size: 0.7rem; color: var(--dim); margin-left: 8px;">Solana</span>
+          </div>
+          <div style="font-size: 0.75rem; color: var(--dim);">live</div>
+        </div>
+        <canvas id="wizard-chart" style="width: 100%; height: 200px;"></canvas>
+        <div id="wizard-price" style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px;">
+          <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; color: #4ade80;" id="wiz-price">--</div>
+          <div style="font-size: 0.8rem;" id="wiz-change">--</div>
+        </div>
       </div>
+      <script>
+      (function(){
+        const API = 'https://api.coingecko.com/api/v3/coins/smoking-wizard/market_chart?vs_currency=usd&days=30';
+        const canvas = document.getElementById('wizard-chart');
+        const ctx = canvas.getContext('2d');
+        function draw(prices) {
+          const dpr = window.devicePixelRatio || 1;
+          const rect = canvas.getBoundingClientRect();
+          canvas.width = rect.width * dpr;
+          canvas.height = rect.height * dpr;
+          ctx.scale(dpr, dpr);
+          const w = rect.width, h = rect.height;
+          const vals = prices.map(p => p[1]);
+          const min = Math.min(...vals), max = Math.max(...vals);
+          const range = max - min || 1;
+          ctx.clearRect(0, 0, w, h);
+          // gradient fill
+          const grad = ctx.createLinearGradient(0, 0, 0, h);
+          grad.addColorStop(0, 'rgba(74, 222, 128, 0.3)');
+          grad.addColorStop(1, 'rgba(74, 222, 128, 0)');
+          ctx.beginPath();
+          ctx.moveTo(0, h);
+          for (let i = 0; i < vals.length; i++) {
+            const x = (i / (vals.length - 1)) * w;
+            const y = h - ((vals[i] - min) / range) * h * 0.85 - h * 0.05;
+            ctx.lineTo(x, y);
+          }
+          ctx.lineTo(w, h);
+          ctx.closePath();
+          ctx.fillStyle = grad;
+          ctx.fill();
+          // line
+          ctx.beginPath();
+          for (let i = 0; i < vals.length; i++) {
+            const x = (i / (vals.length - 1)) * w;
+            const y = h - ((vals[i] - min) / range) * h * 0.85 - h * 0.05;
+            i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          }
+          ctx.shadowColor = 'rgba(74, 222, 128, 0.5)';
+          ctx.shadowBlur = 8;
+          ctx.strokeStyle = '#4ade80';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          // price display
+          const last = vals[vals.length - 1];
+          const first = vals[0];
+          const chg = ((last - first) / first * 100).toFixed(1);
+          document.getElementById('wiz-price').textContent = '$' + last.toFixed(6);
+          const chgEl = document.getElementById('wiz-change');
+          chgEl.textContent = (chg >= 0 ? '+' : '') + chg + '% (30d)';
+          chgEl.style.color = chg >= 0 ? '#4ade80' : '#ef4444';
+        }
+        fetch(API).then(r => r.json()).then(d => { if(d.prices) draw(d.prices); }).catch(() => {
+          document.getElementById('wiz-price').textContent = '$wizard';
+          document.getElementById('wiz-change').textContent = 'chart unavailable';
+          document.getElementById('wiz-change').style.color = 'var(--dim)';
+        });
+      })();
+      </script>
       <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
         <a href="https://pump.fun/coin/CGKzVhKKYhP5qNrbnD8gKfPtLipsMQX3YkXhHaTVJGnH" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 8px; padding: 10px 12px; font-size: 0.8rem; color: var(--text); font-weight: 500; transition: all 0.2s;">pump.fun</a>
         <a href="https://x.com/savewizardsol" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 8px; padding: 10px 12px; font-size: 0.8rem; color: var(--text); font-weight: 500; transition: all 0.2s;">@savewizardsol</a>
