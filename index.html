@@ -631,10 +631,10 @@
   }
 
   .promo-article:hover {
-    animation: none;
+    animation-play-state: paused;
+    opacity: 1;
     box-shadow: 0 0 36px rgba(139, 92, 246, 0.55), 0 0 72px rgba(212, 168, 83, 0.25);
-    transform: translate3d(0, 0, 0) scale(1.015);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    transition: box-shadow 0.4s ease;
   }
 
   .promo-article:active { transform: translateY(0) scale(0.985); }
