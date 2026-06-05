@@ -3,6 +3,10 @@
     {
       "source": "/mediakit",
       "destination": "/mediakit.html"
+    },
+    {
+      "source": "/beholder",
+      "destination": "/beholder.html"
     }
   ]
 }
