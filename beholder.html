@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>beholder.mp3 | mimofr</title>
+<meta name="description" content="beholder.mp3 by mimofr — out now on spotify, apple music, soundcloud, youtube music">
+
+<meta property="og:title" content="beholder.mp3 by mimofr">
+<meta property="og:description" content="out now on every platform">
+<meta property="og:type" content="music.song">
+<meta property="og:url" content="https://mimofr.com/beholder">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="https://ugc.production.linktr.ee/b91269f2-5b4d-46f8-96d8-7747133e088a_3000x3000-3472677--94BC9256-29E1-4C8C-840430484F85B7FF--0--548932--mino.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07040d;
+    --surface: rgba(20, 16, 30, 0.55);
+    --surface-hover: rgba(28, 22, 42, 0.78);
+    --border: rgba(212, 168, 83, 0.18);
+    --border-hover: rgba(139, 92, 246, 0.55);
+    --text: #f0ecf5;
+    --text-2: #b4adc2;
+    --dim: #6e6880;
+    --gold: #d4a853;
+    --purple: #8b5cf6;
+  }
+
+  html { background: var(--bg); }
+  body {
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    min-height: 100vh; min-height: 100svh;
+    overflow-x: hidden;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    background: transparent;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; }
+
+  /* === Background video (fixed full-bleed) === */
+  .bg-video {
+    position: fixed; inset: 0;
+    width: 100vw; height: 100vh; height: 100svh;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .bg-video video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.05);
+    filter: saturate(1.1);
+  }
+  .bg-overlay {
+    position: fixed; inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 80% at 50% 30%, rgba(7,4,13,0) 0%, rgba(7,4,13,0.55) 50%, rgba(7,4,13,0.92) 85%),
+      linear-gradient(180deg, rgba(7,4,13,0.35) 0%, rgba(7,4,13,0.15) 30%, rgba(7,4,13,0.85) 100%);
+  }
+
+  /* === Layout === */
+  .page {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 20px 48px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .home-link {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: var(--text-2);
+    letter-spacing: 1px;
+    transition: color 0.2s ease;
+  }
+  .home-link:hover { color: var(--gold); }
+
+  /* === Hero === */
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 0 36px;
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: rise 0.7s ease forwards;
+  }
+
+  .title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(22px, 6vw, 32px);
+    letter-spacing: 0.5px;
+    line-height: 1.15;
+    color: var(--text);
+    text-shadow:
+      0 2px 30px rgba(0,0,0,0.85),
+      0 0 60px rgba(139, 92, 246, 0.18);
+    opacity: 0;
+    animation: rise 0.7s ease 0.1s forwards;
+  }
+
+  .sub {
+    margin-top: 18px;
+    font-size: 14px;
+    color: var(--text-2);
+    letter-spacing: 0.5px;
+    opacity: 0;
+    animation: rise 0.7s ease 0.2s forwards;
+  }
+  .sub strong { color: var(--text); font-weight: 600; }
+
+  /* === DSP buttons === */
+  .buttons {
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dsp {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: rise 0.55s ease forwards;
+    will-change: transform;
+  }
+  .dsp:nth-child(1) { animation-delay: 0.35s; }
+  .dsp:nth-child(2) { animation-delay: 0.42s; }
+  .dsp:nth-child(3) { animation-delay: 0.49s; }
+  .dsp:nth-child(4) { animation-delay: 0.56s; }
+  .dsp:nth-child(5) { animation-delay: 0.63s; }
+
+  .dsp:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 24px rgba(0,0,0,0.45),
+      0 0 0 1px rgba(139, 92, 246, 0.15),
+      0 0 40px -10px rgba(139, 92, 246, 0.4);
+  }
+
+  .dsp-icon {
+    width: 32px; height: 32px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dsp-icon svg {
+    width: 100%; height: 100%;
+    display: block;
+  }
+
+  .dsp-name {
+    flex: 1;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+    color: var(--text);
+  }
+
+  .dsp-cta {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    transition: transform 0.22s ease;
+  }
+  .dsp:hover .dsp-cta {
+    transform: translateX(3px);
+    color: var(--text);
+  }
+
+  /* coming soon variant */
+  .dsp.soon {
+    opacity: 0;
+    animation: rise 0.55s ease 0.63s forwards;
+    cursor: default;
+  }
+  .dsp.soon::after {
+    content: '';
+  }
+  .dsp.soon:hover {
+    background: var(--surface);
+    border-color: var(--border);
+    transform: none;
+    box-shadow: none;
+  }
+  .dsp.soon .dsp-name { color: var(--text-2); }
+  .dsp.soon .dsp-cta { color: var(--dim); }
+  .dsp.soon .dsp-icon { opacity: 0.55; }
+  .dsp.soon:hover .dsp-cta { transform: none; color: var(--dim); }
+
+  /* === Footer === */
+  .footer {
+    width: 100%;
+    max-width: 460px;
+    margin: 32px auto 0;
+    text-align: center;
+    opacity: 0;
+    animation: rise 0.55s ease 0.8s forwards;
+  }
+  .footer-text {
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.3px;
+  }
+
+  /* === Audio toggle (fixed bottom-right) === */
+  .audio-btn {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    z-index: 10;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: rgba(20, 16, 30, 0.82);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(14px) saturate(150%);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold);
+    transition: all 0.22s ease;
+    opacity: 0;
+    animation: rise 0.5s ease 1s forwards;
+  }
+  .audio-btn:hover {
+    border-color: var(--border-hover);
+    color: var(--text);
+    transform: scale(1.05);
+  }
+  .audio-btn svg { width: 20px; height: 20px; }
+  .audio-btn .label {
+    position: absolute;
+    right: 56px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(20, 16, 30, 0.95);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: var(--text);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    letter-spacing: 1.5px;
+  }
+  .audio-btn:hover .label { opacity: 1; }
+  .audio-btn.pulse::before {
+    content: '';
+    position: absolute; inset: -4px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    opacity: 0;
+    animation: pulse 1.8s ease infinite;
+  }
+
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0% { opacity: 0.7; transform: scale(0.95); }
+    100% { opacity: 0; transform: scale(1.3); }
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 24px 16px 36px; }
+    .hero { padding: 32px 0 24px; }
+    .dsp { padding: 13px 16px; gap: 12px; }
+    .dsp-name { font-size: 15px; }
+    .dsp-icon { width: 28px; height: 28px; }
+    .audio-btn { width: 44px; height: 44px; bottom: 16px; right: 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .eyebrow, .title, .sub, .dsp, .footer, .audio-btn { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Fixed full-bleed background -->
+<div class="bg-video">
+  <video autoplay muted loop playsinline preload="auto" id="bg-vid">
+    <source src="beholder-visual.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="bg-overlay"></div>
+
+<!-- Background audio: tries to autoplay; falls back to first-interaction trigger if blocked -->
+<audio id="bg-audio" loop preload="auto" autoplay>
+  <source src="beholder-slowed.mp3" type="audio/mpeg">
+</audio>
+
+<main class="page">
+
+  <header class="header">
+    <a class="home-link" href="/">← mimofr.com</a>
+    <span class="home-link" style="color: var(--gold)">out now</span>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">new single · 2026</div>
+    <h1 class="title">beholder.mp3</h1>
+    <p class="sub">by <strong>mimofr</strong></p>
+  </section>
+
+  <nav class="buttons">
+
+    <a class="dsp" href="https://open.spotify.com/track/1IgltHohTOTNunfUb91e8U" target="_blank" rel="noopener" onclick="track('spotify')">
+      <span class="dsp-icon">
+        <svg fill="#1DB954" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+      </span>
+      <span class="dsp-name">Spotify</span>
+      <span class="dsp-cta">listen</span>
+    </a>
+
+    <a class="dsp" href="https://music.apple.com/us/album/beholder-mp3/6774807278?i=6774807279" target="_blank" rel="noopener" onclick="track('apple')">
+      <span class="dsp-icon">
+        <svg fill="#FA243C" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026-.747.043-1.49.123-2.193.4-1.336.53-2.3 1.452-2.865 2.78-.192.448-.292.925-.363 1.408-.056.392-.088.785-.1 1.18 0 .032-.007.062-.01.093v12.223c.01.14.017.283.027.424.05.815.154 1.624.497 2.373.65 1.42 1.738 2.353 3.234 2.801.42.127.856.187 1.293.228.555.053 1.11.06 1.667.06h11.03a12.5 12.5 0 001.57-.1c.822-.106 1.596-.35 2.295-.81a5.046 5.046 0 001.88-2.207c.186-.42.293-.87.37-1.324.113-.675.138-1.358.137-2.04-.002-3.8 0-7.595-.003-11.393zm-6.423 3.99v5.712c0 .417-.058.827-.244 1.206-.29.59-.76.962-1.388 1.14-.35.1-.706.157-1.07.173-.95.045-1.773-.6-1.943-1.536a1.88 1.88 0 011.038-2.022c.323-.16.67-.25 1.018-.324.378-.082.758-.153 1.134-.24.274-.063.457-.23.51-.516a.904.904 0 00.02-.193c0-1.815 0-3.63-.002-5.443a.725.725 0 00-.026-.185c-.04-.15-.15-.243-.304-.234-.16.01-.318.035-.475.066-.76.15-1.52.303-2.28.456l-2.325.47-1.374.278c-.016.003-.032.01-.048.013-.277.077-.377.203-.39.49-.002.042 0 .086 0 .13-.002 2.602 0 5.204-.003 7.805 0 .42-.047.836-.215 1.227-.278.64-.77 1.04-1.434 1.233-.35.1-.71.16-1.075.172-.96.036-1.755-.6-1.92-1.544-.14-.812.23-1.685 1.154-2.075.357-.15.73-.232 1.108-.31.287-.06.575-.116.86-.177.383-.083.583-.323.6-.714v-.15c0-2.96 0-5.922.002-8.882 0-.123.013-.25.042-.37.07-.285.273-.448.546-.518.255-.066.515-.112.774-.165.733-.15 1.466-.296 2.2-.444l2.27-.46c.67-.134 1.34-.27 2.01-.403.22-.043.442-.088.663-.106.31-.025.523.17.554.482.008.073.012.148.012.223.002 1.91.002 3.822 0 5.732z"/></svg>
+      </span>
+      <span class="dsp-name">Apple Music</span>
+      <span class="dsp-cta">listen</span>
+    </a>
+
+    <a class="dsp" href="https://music.youtube.com/watch?v=lTgg9za8v6s" target="_blank" rel="noopener" onclick="track('ytmusic')">
+      <span class="dsp-icon">
+        <svg fill="#FF0000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L15.816 12l-6.132 3.54z"/></svg>
+      </span>
+      <span class="dsp-name">YouTube Music</span>
+      <span class="dsp-cta">listen</span>
+    </a>
+
+    <a class="dsp" href="https://soundcloud.com/mimofrl/beholder-mp3-mimofrl-612beno" target="_blank" rel="noopener" onclick="track('soundcloud')">
+      <span class="dsp-icon">
+        <svg fill="#FF5500" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.999 14.165c-.052 1.796-1.612 3.169-3.4 3.169h-8.18a.68.68 0 0 1-.675-.683V7.862a.747.747 0 0 1 .452-.724s.75-.513 2.333-.513a5.364 5.364 0 0 1 2.763.755 5.433 5.433 0 0 1 2.57 3.54c.282-.08.574-.121.868-.12.884 0 1.73.358 2.347.992s.948 1.49.922 2.373ZM10.721 8.421c.247 2.98.427 5.697 0 8.672a.264.264 0 0 1-.53 0c-.395-2.946-.22-5.718 0-8.672a.264.264 0 0 1 .53 0ZM9.072 9.448c.285 2.659.37 4.986-.006 7.655a.277.277 0 0 1-.55 0c-.331-2.63-.256-5.02 0-7.655a.277.277 0 0 1 .556 0Zm-1.663-.257c.27 2.726.39 5.171 0 7.904a.266.266 0 0 1-.532 0c-.38-2.69-.257-5.21 0-7.904a.266.266 0 0 1 .532 0Zm-1.647.77a26.108 26.108 0 0 1-.008 7.147.272.272 0 0 1-.542 0 27.955 27.955 0 0 1 0-7.147.275.275 0 0 1 .55 0Zm-1.67 1.769c.421 1.865.228 3.5-.029 5.388a.257.257 0 0 1-.514 0c-.21-1.858-.398-3.549 0-5.389a.272.272 0 0 1 .543 0Zm-1.655-.273c.388 1.897.26 3.508-.01 5.412-.026.28-.514.283-.54 0-.244-1.878-.347-3.54-.01-5.412a.283.283 0 0 1 .56 0Zm-1.668.911c.4 1.268.257 2.292-.026 3.572a.257.257 0 0 1-.514 0c-.241-1.262-.354-2.312-.023-3.572a.283.283 0 0 1 .563 0Z"/></svg>
+      </span>
+      <span class="dsp-name">SoundCloud</span>
+      <span class="dsp-cta">listen</span>
+    </a>
+
+    <a class="dsp" href="https://youtu.be/cGYWBcfgRBY" target="_blank" rel="noopener" onclick="track('youtube')">
+      <span class="dsp-icon">
+        <svg fill="#FF0000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </span>
+      <span class="dsp-name">visualizer</span>
+      <span class="dsp-cta">watch</span>
+    </a>
+
+  </nav>
+
+  <footer class="footer">
+    <p class="footer-text">© mimofr · all platforms · all yours</p>
+  </footer>
+
+</main>
+
+<!-- Audio mute/unmute toggle -->
+<button class="audio-btn pulse" id="audio-toggle" aria-label="toggle background audio">
+  <span class="label">tap to hear</span>
+  <svg id="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/>
+    <line x1="23" y1="9" x2="17" y2="15"/>
+    <line x1="17" y1="9" x2="23" y2="15"/>
+  </svg>
+  <svg id="icon-playing" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/>
+    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+  </svg>
+</button>
+
+<script>
+  // Track outbound clicks (gtag/fbq safe-call)
+  function track(platform) {
+    try {
+      if (window.gtag) gtag('event', 'beholder_click', { platform: platform });
+      if (window.fbq) fbq('trackCustom', 'BeholderClick', { platform: platform });
+    } catch (e) {}
+  }
+
+  // Background audio: autoplay, with first-interaction fallback for browsers that block it
+  (function () {
+    const audio = document.getElementById('bg-audio');
+    const btn = document.getElementById('audio-toggle');
+    const iconMuted = document.getElementById('icon-muted');
+    const iconPlaying = document.getElementById('icon-playing');
+
+    audio.volume = 0.55;
+    let playing = false;
+
+    function setPlaying(state) {
+      playing = state;
+      iconMuted.style.display = state ? 'none' : 'block';
+      iconPlaying.style.display = state ? 'block' : 'none';
+      if (state) btn.classList.remove('pulse');
+      btn.setAttribute('aria-label', state ? 'mute background audio' : 'play background audio');
+      btn.querySelector('.label').textContent = state ? 'mute' : 'tap to hear';
+    }
+
+    function tryPlay() {
+      return audio.play()
+        .then(() => { setPlaying(true); return true; })
+        .catch(() => false);
+    }
+
+    // 1) Attempt immediate autoplay
+    tryPlay();
+
+    // 2) If autoplay was blocked, the first ANY interaction triggers play
+    const events = ['pointerdown', 'click', 'keydown', 'touchstart', 'scroll'];
+    function onFirstInteraction() {
+      if (playing) { cleanup(); return; }
+      tryPlay().then((ok) => { if (ok) cleanup(); });
+    }
+    function cleanup() {
+      events.forEach(e => window.removeEventListener(e, onFirstInteraction, { passive: true }));
+    }
+    events.forEach(e => window.addEventListener(e, onFirstInteraction, { passive: true, once: false }));
+
+    // 3) Explicit toggle button
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!playing) {
+        tryPlay();
+      } else {
+        audio.pause();
+        setPlaying(false);
+      }
+    });
+
+    // Stop pulse after 6s regardless
+    setTimeout(() => btn.classList.remove('pulse'), 6000);
+
+    // Reflect actual audio state if it starts playing for any reason
+    audio.addEventListener('play', () => setPlaying(true));
+    audio.addEventListener('pause', () => setPlaying(false));
+  })();
+</script>
+
+</body>
+</html>
