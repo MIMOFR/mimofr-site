@@ -307,45 +307,13 @@
   .hero .stats {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin-top: 18px;
-    flex-wrap: wrap;
-  }
-
-  .hero .stats span {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 9px 13px;
-    min-width: 66px;
-    backdrop-filter: blur(6px);
-    transition: border-color 0.4s var(--ease-smooth), transform 0.4s var(--ease-out);
-  }
-
-  .hero .stats span:hover {
-    border-color: rgba(212, 168, 83, 0.4);
-    transform: translateY(-2px);
-  }
-
-  .hero .stats strong {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 13px;
-    color: var(--gold);
-    text-shadow: 0 0 12px rgba(212, 168, 83, 0.4);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .hero .stats em {
-    font-style: normal;
-    font-size: 9px;
+    gap: 20px;
+    margin-top: 10px;
+    font-size: 11px;
     color: var(--dim);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 6px;
   }
+  
+  .hero .stats strong { color: var(--text); }
   
   /* Menu */
   .menu {
@@ -970,11 +938,9 @@
       </div>
       <h2>mimofr</h2>
       <p class="bio">producer · wizardcore · #mimomethod</p>
-      <div class="stats" id="proofBar">
-        <span><strong data-target="1.3" data-suffix="B+">0</strong><em>views</em></span>
-        <span><strong data-target="247" data-suffix="K">0</strong><em>instagram</em></span>
-        <span><strong data-target="98" data-suffix="K">0</strong><em>youtube</em></span>
-        <span><strong data-target="100" data-suffix="M+">0</strong><em>streams</em></span>
+      <div class="stats">
+        <span><strong>100M+</strong> streams</span>
+        <span><strong>1B+</strong> views</span>
       </div>
     </div>
   </section>
@@ -1157,30 +1123,6 @@
       // If autoplay blocked, user can click the button
       audioBtn.textContent = '🔇';
     });
-
-    runProof();
-  }
-
-  // Animated count-up for the social-proof bar
-  function countUp(el) {
-    const target = parseFloat(el.dataset.target);
-    const suffix = el.dataset.suffix || '';
-    const dec = (el.dataset.target.indexOf('.') > -1) ? 1 : 0;
-    const steps = 38;
-    let i = 0;
-    const t = setInterval(() => {
-      i++;
-      const cur = Math.min(target, (target / steps) * i);
-      el.textContent = cur.toFixed(dec) + suffix;
-      if (i >= steps) { clearInterval(t); el.textContent = target.toFixed(dec) + suffix; }
-    }, 24);
-  }
-  let proofRan = false;
-  function runProof() {
-    if (proofRan) return;
-    proofRan = true;
-    document.querySelectorAll('#proofBar strong').forEach((el, idx) =>
-      setTimeout(() => countUp(el), 200 + idx * 160));
   }
   
   function toggleAudio() {
